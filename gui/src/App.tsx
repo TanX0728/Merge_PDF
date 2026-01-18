@@ -393,8 +393,8 @@ export default function App() {
                     className="text-blue-500 mb-4 group-hover:scale-110 transition-transform"
                     weight="bold"
                   />
-                  <p className="text-slate-400 font-bold text-[11px] leading-relaxed px-2">
-                    将 PDF 拖到此处开始
+                  <p className="text-slate-400 font-bold text-[14px] leading-relaxed px-2 ">
+                    点击添加 PDF文件 
                   </p>
                 </div>
               </div>

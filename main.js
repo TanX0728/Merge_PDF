@@ -15,15 +15,25 @@ function createWindow() {
   });
 
   // 重要：在开发环境下，强制加载 Vite 启动的 5173 端口
-  win.loadURL("http://localhost:5173").catch((err) => {
-    console.error("加载 URL 失败:", err);
-    // 如果失败（比如 Vite 还没准备好），延迟 2 秒重试
-    setTimeout(() => {
-      win.loadURL("http://localhost:5173").catch((retryErr) => {
-        console.error("重试加载 URL 失败:", retryErr);
+  // 使用递归重试，直到服务器就绪
+  const loadURLWithRetry = (url, retries = 10, delay = 1000) => {
+    win.loadURL(url)
+      .then(() => {
+        console.log("成功加载 URL:", url);
+      })
+      .catch((err) => {
+        if (retries > 0) {
+          console.log(`加载 URL 失败，${delay}ms 后重试... (剩余 ${retries} 次)`);
+          setTimeout(() => {
+            loadURLWithRetry(url, retries - 1, delay);
+          }, delay);
+        } else {
+          console.error("加载 URL 最终失败:", err);
+        }
       });
-    }, 2000);
-  });
+  };
+
+  loadURLWithRetry("http://localhost:5173");
 
   // 确保窗口在前台显示
   win.once("ready-to-show", () => {
