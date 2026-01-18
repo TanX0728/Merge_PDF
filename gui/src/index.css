@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 可以在这里添加全局背景色，防止白屏闪烁 */
+body {
+  margin: 0;
+  background-color: #f5f7fa;
+}
